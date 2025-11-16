@@ -1,39 +1,64 @@
 #!/bin/bash
 
 echo "=========================================="
-echo "Installing Build Tools & Building SQLite"
+echo "Setup Build Tools untuk better-sqlite3"
 echo "=========================================="
+echo ""
 
 # Detect OS
 if [ -f /etc/debian_version ]; then
-    echo "Detected: Debian/Ubuntu"
+    echo "✓ Detected: Debian/Ubuntu"
+    echo ""
+    echo "Installing build tools..."
     sudo apt-get update
-    sudo apt-get install -y build-essential python3 python3-pip
+    sudo apt-get install -y build-essential python3
+    echo ""
+    echo "✓ Build tools installed!"
 elif [ -f /etc/redhat-release ]; then
-    echo "Detected: Red Hat/CentOS"
+    echo "✓ Detected: Red Hat/CentOS"
+    echo ""
+    echo "Installing build tools..."
     sudo yum groupinstall -y "Development Tools"
     sudo yum install -y python3
+    echo ""
+    echo "✓ Build tools installed!"
 else
-    echo "Unknown OS. Please install build-essential and python3 manually."
+    echo "❌ Unknown OS"
+    echo "Please install build-essential and python3 manually."
     exit 1
 fi
 
 echo ""
-echo "Build tools installed successfully!"
-echo ""
-echo "Now building better-sqlite3..."
+echo "=========================================="
+echo "Building better-sqlite3 with pnpm..."
+echo "=========================================="
 echo ""
 
 cd /srv/dashboard-license-management
 
-# Navigate to better-sqlite3 and build
-cd node_modules/.pnpm/better-sqlite3@12.4.1/node_modules/better-sqlite3
-echo "Installing better-sqlite3 with build from source..."
-npm install --build-from-source
+# Rebuild better-sqlite3 using pnpm
+pnpm rebuild better-sqlite3
 
-echo ""
-echo "=========================================="
-echo "✓ Build completed!"
-echo "=========================================="
-echo ""
-echo "Now run: pnpm init-db"
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "=========================================="
+    echo "✓ Build completed successfully!"
+    echo "=========================================="
+    echo ""
+    echo "You can now run:"
+    echo "  pnpm init-db"
+    echo "  pnpm start"
+else
+    echo ""
+    echo "❌ Build failed. Trying force install..."
+    pnpm install --force
+
+    if [ $? -eq 0 ]; then
+        echo ""
+        echo "✓ Force install successful!"
+    else
+        echo ""
+        echo "❌ Still failed. Please check the error messages above."
+        exit 1
+    fi
+fi

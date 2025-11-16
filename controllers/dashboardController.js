@@ -1,23 +1,8 @@
 const { Product, Customer, License, LicenseType, ActivityLog } = require('../models');
 const { asyncHandler } = require('../middleware/errorHandler');
 
-// Render dashboard page
-const showDashboard = asyncHandler(async (req, res) => {
-  // Get statistics
-  const stats = await getDashboardStats();
-
-  res.render('dashboard/index', {
-    title: 'Dashboard',
-    user: {
-      username: req.session.username,
-      role: req.session.userRole
-    },
-    stats
-  });
-});
-
-// Get dashboard statistics (API endpoint)
-const getDashboardStats = asyncHandler(async (req, res) => {
+// Internal function to get dashboard statistics
+async function getStats() {
   // Count totals
   const totalProducts = await Product.count();
   const totalCustomers = await Customer.count();
@@ -38,7 +23,7 @@ const getDashboardStats = asyncHandler(async (req, res) => {
   const recentLicenses = await License.findAll();
   const recentLicensesList = recentLicenses.slice(0, 5);
 
-  const stats = {
+  return {
     totals: {
       products: totalProducts,
       customers: totalCustomers,
@@ -52,17 +37,31 @@ const getDashboardStats = asyncHandler(async (req, res) => {
     recentActivity: recentActivity,
     recentLicenses: recentLicensesList
   };
+}
 
-  // If this is an API request, return JSON
-  if (req && res && req.path && req.path.startsWith('/api/')) {
-    return res.json({
-      success: true,
-      stats
-    });
-  }
+// Render dashboard page
+const showDashboard = asyncHandler(async (req, res) => {
+  // Get statistics
+  const stats = await getStats();
 
-  // Otherwise return the stats object (for use in views)
-  return stats;
+  res.render('dashboard/index', {
+    title: 'Dashboard',
+    user: {
+      username: req.session.username,
+      role: req.session.userRole
+    },
+    stats
+  });
+});
+
+// Get dashboard statistics (API endpoint)
+const getDashboardStats = asyncHandler(async (req, res) => {
+  const stats = await getStats();
+
+  res.json({
+    success: true,
+    stats
+  });
 });
 
 module.exports = {
