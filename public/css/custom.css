@@ -1,6 +1,25 @@
 :root {
   --sidebar-width: 240px;
   --navbar-height: 56px;
+
+  /* Custom Color Palette */
+  --yellow-green: #98ce00;
+  --turquoise: #16e0bd;
+  --maya-blue: #78c3fb;
+  --wisteria-blue: #89a6fb;
+  --dusty-mauve: #98838f;
+
+  /* Primary Colors */
+  --primary-color: var(--turquoise);
+  --secondary-color: var(--maya-blue);
+  --accent-color: var(--yellow-green);
+  --info-color: var(--wisteria-blue);
+  --muted-color: var(--dusty-mauve);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--turquoise), var(--maya-blue));
+  --gradient-accent: linear-gradient(135deg, var(--yellow-green), var(--turquoise));
+  --gradient-full: linear-gradient(135deg, #98ce00, #16e0bd, #78c3fb, #89a6fb, #98838f);
 }
 
 /* Main Layout */
@@ -44,17 +63,18 @@ body {
   color: #333;
   padding: 0.75rem 1rem;
   border-left: 3px solid transparent;
+  transition: all 0.3s ease;
 }
 
 .sidebar .nav-link:hover {
-  color: #007bff;
-  background-color: rgba(0, 123, 255, 0.1);
+  color: var(--turquoise);
+  background-color: rgba(22, 224, 189, 0.1);
 }
 
 .sidebar .nav-link.active {
-  color: #007bff;
-  border-left-color: #007bff;
-  background-color: rgba(0, 123, 255, 0.1);
+  color: var(--turquoise);
+  border-left-color: var(--turquoise);
+  background: linear-gradient(90deg, rgba(22, 224, 189, 0.15), transparent);
 }
 
 .sidebar .nav-link i {
@@ -89,6 +109,23 @@ body {
   font-size: 1.5rem;
 }
 
+/* Custom Stat Icon Colors */
+.stat-icon.bg-primary {
+  background: linear-gradient(135deg, var(--turquoise), var(--maya-blue)) !important;
+}
+
+.stat-icon.bg-success {
+  background: linear-gradient(135deg, var(--yellow-green), var(--turquoise)) !important;
+}
+
+.stat-icon.bg-info {
+  background: linear-gradient(135deg, var(--maya-blue), var(--wisteria-blue)) !important;
+}
+
+.stat-icon.bg-warning {
+  background: linear-gradient(135deg, var(--yellow-green), #ffc107) !important;
+}
+
 /* Tables */
 .table-responsive {
   border-radius: 0.5rem;
@@ -117,6 +154,7 @@ body {
 
 /* Navbar */
 .navbar {
+  background: linear-gradient(135deg, var(--turquoise) 0%, var(--maya-blue) 50%, var(--wisteria-blue) 100%) !important;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   z-index: 1030;
 }
@@ -135,8 +173,13 @@ body {
   box-shadow: none;
 }
 
+.navbar .btn-outline-light {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
 .navbar .btn-outline-light:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Cards */
@@ -153,10 +196,59 @@ body {
 /* Buttons */
 .btn {
   border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 .btn-sm {
   font-size: 0.8125rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--turquoise), var(--maya-blue));
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--maya-blue), var(--wisteria-blue));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(22, 224, 189, 0.3);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--yellow-green), var(--turquoise));
+  border: none;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, var(--turquoise), var(--maya-blue));
+  transform: translateY(-2px);
+}
+
+/* Links */
+a {
+  color: var(--turquoise);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--maya-blue);
+}
+
+/* Border Colors for Stat Cards */
+.border-primary {
+  border-color: var(--turquoise) !important;
+}
+
+.border-success {
+  border-color: var(--yellow-green) !important;
+}
+
+.border-info {
+  border-color: var(--maya-blue) !important;
+}
+
+.border-warning {
+  border-color: var(--wisteria-blue) !important;
 }
 
 /* Dark Mode Styles */
@@ -329,4 +421,36 @@ body {
     margin-left: 0;
     margin-top: 0;
   }
+}
+
+/* Additional Theme Enhancements */
+.text-primary {
+  color: var(--turquoise) !important;
+}
+
+.bg-gradient-primary {
+  background: var(--gradient-primary) !important;
+}
+
+.bg-gradient-accent {
+  background: var(--gradient-accent) !important;
+}
+
+/* Badge Colors */
+.badge.bg-success {
+  background: linear-gradient(135deg, var(--yellow-green), var(--turquoise)) !important;
+}
+
+.badge.bg-primary {
+  background: linear-gradient(135deg, var(--turquoise), var(--maya-blue)) !important;
+}
+
+.badge.bg-info {
+  background: var(--maya-blue) !important;
+}
+
+/* Chart.js Custom Colors */
+.chart-container {
+  position: relative;
+  height: 250px;
 }
