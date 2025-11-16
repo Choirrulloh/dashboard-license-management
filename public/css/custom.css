@@ -43,20 +43,19 @@ body {
 .sidebar-brand {
   background: linear-gradient(135deg, var(--turquoise), var(--maya-blue));
   border-bottom: 2px solid var(--wisteria-blue);
+  padding: 1rem 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .sidebar-brand a {
   color: white !important;
-}
-
-.sidebar-brand h4 {
   font-weight: 600;
-  letter-spacing: 0.5px;
+  font-size: 1.1rem;
+  letter-spacing: 0.3px;
 }
 
 .sidebar-brand i {
-  font-size: 1.5rem;
-  vertical-align: middle;
+  font-size: 1.3rem;
 }
 
 /* Desktop Sidebar */
@@ -299,8 +298,8 @@ a:hover {
 }
 
 [data-theme="dark"] .sidebar-brand {
-  background: linear-gradient(135deg, #1a6b5e, #0d5a8f) !important;
-  border-bottom-color: #2d5aa0;
+  background: linear-gradient(135deg, #0d4d44, #0a3d66) !important;
+  border-bottom-color: #1a4d7a;
 }
 
 [data-theme="dark"] .card {
