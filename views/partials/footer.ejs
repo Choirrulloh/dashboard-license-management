@@ -11,5 +11,40 @@
 <!-- Custom JS -->
 <script src="/js/custom.js"></script>
 
+<!-- ArchitectUI JS -->
+<script>
+// Mobile menu toggle
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileToggle = document.querySelector('.mobile-toggle-nav');
+  const sidebar = document.querySelector('.app-sidebar');
+  const appContainer = document.querySelector('.app-container');
+
+  if (mobileToggle && sidebar) {
+    mobileToggle.addEventListener('click', function() {
+      sidebar.classList.toggle('sidebar-mobile-open');
+    });
+  }
+
+  // Close sidebar button
+  const closeSidebar = document.querySelector('.close-sidebar-btn');
+  if (closeSidebar && appContainer) {
+    closeSidebar.addEventListener('click', function() {
+      appContainer.classList.toggle('closed-sidebar');
+    });
+  }
+
+  // Click outside sidebar to close on mobile
+  document.addEventListener('click', function(e) {
+    if (window.innerWidth < 1200) {
+      if (sidebar && sidebar.classList.contains('sidebar-mobile-open')) {
+        if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
+          sidebar.classList.remove('sidebar-mobile-open');
+        }
+      }
+    }
+  });
+});
+</script>
+
 <!-- Toast Container -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>

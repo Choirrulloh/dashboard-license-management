@@ -1,23 +1,10 @@
 <div class="app-sidebar sidebar-shadow">
-  <div class="app-header__logo">
-    <div class="logo-src">
-      <i class="pe-7s-shield text-white" style="font-size: 2rem;"></i>
-    </div>
-    <div class="header__pane ms-auto">
-      <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
-        <span class="hamburger-box">
-          <span class="hamburger-inner"></span>
-        </span>
-      </button>
-    </div>
-  </div>
-
-  <div class="app-header__mobile-menu">
-    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
-      </span>
-    </button>
+  <!-- Logo Brand -->
+  <div class="app-sidebar__brand">
+    <a href="/dashboard" class="d-flex align-items-center text-decoration-none">
+      <i class="bi bi-shield-check me-2" style="font-size: 1.5rem; color: white;"></i>
+      <span style="color: white; font-weight: 600; font-size: 1.1rem;">License Manager</span>
+    </a>
   </div>
 
   <div class="scrollbar-sidebar">
@@ -27,29 +14,28 @@
 
         <li class="<%= title === 'Dashboard' ? 'mm-active' : '' %>">
           <a href="/dashboard">
-            <i class="metismenu-icon pe-7s-rocket"></i>
+            <i class="metismenu-icon bi bi-speedometer2"></i>
             Dashboard
           </a>
         </li>
 
         <li class="<%= title.includes('Product') ? 'mm-active' : '' %>">
           <a href="/products">
-            <i class="metismenu-icon pe-7s-box2"></i>
+            <i class="metismenu-icon bi bi-box-seam"></i>
             Products
-            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
           </a>
         </li>
 
         <li class="<%= title.includes('Customer') ? 'mm-active' : '' %>">
           <a href="/customers">
-            <i class="metismenu-icon pe-7s-users"></i>
+            <i class="metismenu-icon bi bi-people"></i>
             Customers
           </a>
         </li>
 
         <li class="<%= title.includes('License') ? 'mm-active' : '' %>">
           <a href="/licenses">
-            <i class="metismenu-icon pe-7s-key"></i>
+            <i class="metismenu-icon bi bi-key"></i>
             Licenses
           </a>
         </li>
@@ -58,21 +44,21 @@
 
         <li>
           <a href="/products/create">
-            <i class="metismenu-icon pe-7s-plus"></i>
+            <i class="metismenu-icon bi bi-plus-circle"></i>
             New Product
           </a>
         </li>
 
         <li>
           <a href="/customers/create">
-            <i class="metismenu-icon pe-7s-add-user"></i>
+            <i class="metismenu-icon bi bi-person-plus"></i>
             New Customer
           </a>
         </li>
 
         <li>
           <a href="/licenses/create">
-            <i class="metismenu-icon pe-7s-id"></i>
+            <i class="metismenu-icon bi bi-key-fill"></i>
             Generate License
           </a>
         </li>

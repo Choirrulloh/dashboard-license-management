@@ -325,6 +325,21 @@ a:hover {
   overflow-x: hidden;
 }
 
+.app-sidebar__brand {
+  background: var(--gradient-primary);
+  padding: 1rem 1.5rem;
+  border-bottom: 2px solid var(--wisteria-blue);
+  text-align: center;
+}
+
+.app-sidebar__brand a {
+  justify-content: center;
+}
+
+.app-sidebar__brand a:hover {
+  opacity: 0.9;
+}
+
 .app-sidebar::-webkit-scrollbar {
   width: 5px;
 }
@@ -628,6 +643,16 @@ a:hover {
 @media (max-width: 1199.98px) {
   .app-sidebar {
     margin-left: calc(var(--sidebar-width) * -1);
+    transition: margin-left 0.3s ease;
+    position: fixed;
+    top: var(--header-height);
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+  }
+
+  .app-sidebar.sidebar-mobile-open {
+    margin-left: 0 !important;
   }
 
   .app-main__outer {
@@ -645,6 +670,27 @@ a:hover {
   .app-header__menu {
     display: block;
   }
+
+  /* Overlay when sidebar open on mobile */
+  .sidebar-mobile-open::before {
+    content: '';
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+}
+
+/* Closed sidebar state (desktop) */
+.app-container.closed-sidebar .app-sidebar {
+  margin-left: calc(var(--sidebar-width) * -1);
+}
+
+.app-container.closed-sidebar .app-main__outer {
+  margin-left: 0;
 }
 
 @media (max-width: 767.98px) {
