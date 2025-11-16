@@ -95,7 +95,10 @@
       </div>
       <div class="card-body">
         <div class="chart-container">
-          <canvas id="licenseStatusChart"></canvas>
+          <canvas id="licenseStatusChart"
+                  data-active="<%= stats.totals.activeLicenses %>"
+                  data-expired="<%= stats.totals.expiredLicenses %>"
+                  data-suspended="<%= stats.totals.suspendedLicenses %>"></canvas>
         </div>
       </div>
     </div>
@@ -195,71 +198,3 @@
     </div>
   </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // License Status Chart
-  const statusCtx = document.getElementById('licenseStatusChart');
-  if (statusCtx) {
-    new Chart(statusCtx.getContext('2d'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Active', 'Expired', 'Suspended'],
-        datasets: [{
-          data: [
-            <%= stats.totals.activeLicenses %>,
-            <%= stats.totals.expiredLicenses %>,
-            <%= stats.totals.suspendedLicenses %>
-          ],
-          backgroundColor: ['#16e0bd', '#dc3545', '#98838f'],
-          borderWidth: 0
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom'
-          }
-        }
-      }
-    });
-  }
-
-  // License Type Chart
-  const typeCtx = document.getElementById('licenseTypeChart');
-  if (typeCtx) {
-    new Chart(typeCtx.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['Trial', 'Monthly', 'Yearly', 'Lifetime'],
-        datasets: [{
-          label: 'Licenses',
-          data: [12, 35, 18, 5],
-          backgroundColor: ['#98ce00', '#16e0bd', '#78c3fb', '#89a6fb'],
-          borderWidth: 0,
-          borderRadius: 8
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              precision: 0
-            }
-          }
-        }
-      }
-    });
-  }
-});
-</script>

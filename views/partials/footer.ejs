@@ -46,6 +46,69 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
+
+  // Initialize Charts (Dashboard)
+  const statusCanvas = document.getElementById('licenseStatusChart');
+  if (statusCanvas && typeof Chart !== 'undefined') {
+    const activeCount = parseInt(statusCanvas.dataset.active || 0);
+    const expiredCount = parseInt(statusCanvas.dataset.expired || 0);
+    const suspendedCount = parseInt(statusCanvas.dataset.suspended || 0);
+
+    new Chart(statusCanvas.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Active', 'Expired', 'Suspended'],
+        datasets: [{
+          data: [activeCount, expiredCount, suspendedCount],
+          backgroundColor: ['#16e0bd', '#dc3545', '#98838f'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+  }
+
+  const typeCanvas = document.getElementById('licenseTypeChart');
+  if (typeCanvas && typeof Chart !== 'undefined') {
+    new Chart(typeCanvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Trial', 'Monthly', 'Yearly', 'Lifetime'],
+        datasets: [{
+          label: 'Licenses',
+          data: [12, 35, 18, 5],
+          backgroundColor: ['#98ce00', '#16e0bd', '#78c3fb', '#89a6fb'],
+          borderWidth: 0,
+          borderRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              precision: 0
+            }
+          }
+        }
+      }
+    });
+  }
 });
 </script>
 
