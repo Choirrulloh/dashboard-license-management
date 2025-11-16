@@ -1,57 +1,67 @@
-<nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-  <div class="position-sticky pt-3">
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link <%= title === 'Dashboard' ? 'active' : '' %>" href="/dashboard">
-          <i class="bi bi-speedometer2"></i>
-          Dashboard
-        </a>
-      </li>
+<!-- Sidebar untuk Desktop & Offcanvas untuk Mobile -->
+<nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar offcanvas-md offcanvas-start" tabindex="-1">
+  <div class="offcanvas-header d-md-none">
+    <h5 class="offcanvas-title">
+      <i class="bi bi-shield-check"></i> Menu
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close"></button>
+  </div>
 
-      <li class="nav-item">
-        <a class="nav-link <%= title.includes('Product') ? 'active' : '' %>" href="/products">
-          <i class="bi bi-box-seam"></i>
-          Products
-        </a>
-      </li>
+  <div class="offcanvas-body p-0">
+    <div class="position-sticky pt-md-3">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link <%= title === 'Dashboard' ? 'active' : '' %>" href="/dashboard">
+            <i class="bi bi-speedometer2"></i>
+            Dashboard
+          </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link <%= title.includes('Customer') ? 'active' : '' %>" href="/customers">
-          <i class="bi bi-people"></i>
-          Customers
-        </a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link <%= title.includes('Product') ? 'active' : '' %>" href="/products">
+            <i class="bi bi-box-seam"></i>
+            Products
+          </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link <%= title.includes('License') ? 'active' : '' %>" href="/licenses">
-          <i class="bi bi-key"></i>
-          Licenses
-        </a>
-      </li>
-    </ul>
+        <li class="nav-item">
+          <a class="nav-link <%= title.includes('Customer') ? 'active' : '' %>" href="/customers">
+            <i class="bi bi-people"></i>
+            Customers
+          </a>
+        </li>
 
-    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-      <span>Quick Actions</span>
-    </h6>
-    <ul class="nav flex-column mb-2">
-      <li class="nav-item">
-        <a class="nav-link" href="/products/create">
-          <i class="bi bi-plus-circle"></i>
-          New Product
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/customers/create">
-          <i class="bi bi-person-plus"></i>
-          New Customer
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/licenses/create">
-          <i class="bi bi-key-fill"></i>
-          Generate License
-        </a>
-      </li>
-    </ul>
+        <li class="nav-item">
+          <a class="nav-link <%= title.includes('License') ? 'active' : '' %>" href="/licenses">
+            <i class="bi bi-key"></i>
+            Licenses
+          </a>
+        </li>
+      </ul>
+
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <span>Quick Actions</span>
+      </h6>
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+          <a class="nav-link" href="/products/create">
+            <i class="bi bi-plus-circle"></i>
+            New Product
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/customers/create">
+            <i class="bi bi-person-plus"></i>
+            New Customer
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/licenses/create">
+            <i class="bi bi-key-fill"></i>
+            Generate License
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
