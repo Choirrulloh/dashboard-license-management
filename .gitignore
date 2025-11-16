@@ -11,6 +11,8 @@ pnpm-lock.yaml
 *.sqlite
 *.sqlite3
 *.db
+*.db-wal
+*.db-shm
 
 # Logs
 logs/
