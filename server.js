@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const database = require('./config/database');
+const { initCronJobs } = require('./config/cron');
+const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,37 +33,56 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 
-// Basic route for testing
+// Import routes
+const authRoutes = require('./routes/auth');
+const dashboardRoutes = require('./routes/dashboard');
+const productRoutes = require('./routes/products');
+const customerRoutes = require('./routes/customers');
+const licenseRoutes = require('./routes/licenses');
+const apiRoutes = require('./routes/api');
+
+// Routes
 app.get('/', (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>License Management System</title>
-      <link rel="stylesheet" href="/css/bootstrap.min.css">
-    </head>
-    <body>
-      <div class="container mt-5">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <h1 class="display-4">License Management System</h1>
-            <p class="lead">Server is running successfully!</p>
-            <p class="text-muted">Bootstrap and Express are configured</p>
-          </div>
-        </div>
-      </div>
-      <script src="/js/bootstrap.bundle.min.js"></script>
-    </body>
-    </html>
-  `);
+  if (req.session && req.session.userId) {
+    return res.redirect('/dashboard');
+  }
+  res.redirect('/auth/login');
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-});
+app.use('/auth', authRoutes);
+app.use('/dashboard', dashboardRoutes);
+app.use('/products', productRoutes);
+app.use('/customers', customerRoutes);
+app.use('/licenses', licenseRoutes);
+app.use('/api', apiRoutes);
+
+// Error handling
+app.use(notFound);
+app.use(errorHandler);
+
+// Initialize database and start server
+const startServer = async () => {
+  try {
+    // Connect to database
+    await database.connect();
+    console.log('✓ Database connected');
+
+    // Initialize cron jobs
+    initCronJobs();
+
+    // Start server
+    app.listen(PORT, () => {
+      console.log('='.repeat(60));
+      console.log(`✓ Server is running on http://localhost:${PORT}`);
+      console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log('='.repeat(60));
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 module.exports = app;
