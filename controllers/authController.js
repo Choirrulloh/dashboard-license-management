@@ -6,7 +6,8 @@ const { asyncHandler } = require('../middleware/errorHandler');
 const showLoginPage = (req, res) => {
   res.render('auth/login', {
     title: 'Login',
-    error: null
+    error: null,
+    layout: false
   });
 };
 
@@ -14,7 +15,8 @@ const showLoginPage = (req, res) => {
 const showRegisterPage = (req, res) => {
   res.render('auth/register', {
     title: 'Register',
-    error: null
+    error: null,
+    layout: false
   });
 };
 
@@ -31,7 +33,8 @@ const login = asyncHandler(async (req, res) => {
     }
     return res.render('auth/login', {
       title: 'Login',
-      error: 'Username and password are required'
+      error: 'Username and password are required',
+      layout: false
     });
   }
 
@@ -43,7 +46,8 @@ const login = asyncHandler(async (req, res) => {
     }
     return res.render('auth/login', {
       title: 'Login',
-      error: result.message
+      error: result.message,
+      layout: false
     });
   }
 
@@ -104,7 +108,8 @@ const register = asyncHandler(async (req, res) => {
     }
     return res.render('auth/register', {
       title: 'Register',
-      error: 'All fields are required'
+      error: 'All fields are required',
+      layout: false
     });
   }
 
@@ -117,7 +122,8 @@ const register = asyncHandler(async (req, res) => {
     }
     return res.render('auth/register', {
       title: 'Register',
-      error: 'Passwords do not match'
+      error: 'Passwords do not match',
+      layout: false
     });
   }
 
@@ -130,7 +136,8 @@ const register = asyncHandler(async (req, res) => {
     }
     return res.render('auth/register', {
       title: 'Register',
-      error: 'Password must be at least 6 characters'
+      error: 'Password must be at least 6 characters',
+      layout: false
     });
   }
 
@@ -145,7 +152,8 @@ const register = asyncHandler(async (req, res) => {
     }
     return res.render('auth/register', {
       title: 'Register',
-      error: 'Username already exists'
+      error: 'Username already exists',
+      layout: false
     });
   }
 
@@ -159,7 +167,8 @@ const register = asyncHandler(async (req, res) => {
     }
     return res.render('auth/register', {
       title: 'Register',
-      error: 'Email already exists'
+      error: 'Email already exists',
+      layout: false
     });
   }
 

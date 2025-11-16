@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const expressLayouts = require('express-ejs-layouts');
 const database = require('./config/database');
 const { initCronJobs } = require('./config/cron');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
@@ -27,6 +28,10 @@ app.use(session({
 // View engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(expressLayouts);
+app.set('layout', 'layout');
+app.set('layout extractScripts', true);
+app.set('layout extractStyles', true);
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
