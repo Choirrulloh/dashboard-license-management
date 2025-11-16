@@ -1,240 +1,259 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <%- include('../partials/head') %>
-</head>
-<body>
-  <%- include('../partials/navbar') %>
+<!-- Page Title -->
+<div class="app-page-title">
+  <div class="page-title-wrapper">
+    <div class="page-title-heading">
+      <div class="page-title-icon">
+        <i class="pe-7s-rocket"></i>
+      </div>
+      <div class="page-title-head">
+        <div class="page-title">Dashboard</div>
+        <div class="page-title-subheading">Welcome to License Manager Dashboard</div>
+      </div>
+    </div>
+    <div class="page-title-actions">
+      <button type="button" class="btn-shadow btn btn-primary" onclick="location.reload()">
+        <i class="fa fa-sync me-2"></i>Refresh
+      </button>
+    </div>
+  </div>
+</div>
 
-  <div class="container-fluid">
-    <div class="row">
-      <%- include('../partials/sidebar') %>
-
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2"><i class="bi bi-speedometer2"></i> Dashboard</h1>
-          <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.reload()">
-              <i class="bi bi-arrow-clockwise"></i> Refresh
-            </button>
+<!-- Statistics Cards -->
+<div class="row">
+  <div class="col-md-6 col-xl-3">
+    <div class="card mb-3 widget-content card-border border-primary">
+      <div class="widget-content-outer">
+        <div class="widget-content-wrapper">
+          <div class="widget-content-left">
+            <div class="widget-heading">Total Products</div>
+            <div class="widget-subheading">All Products</div>
+          </div>
+          <div class="widget-content-right">
+            <div class="widget-numbers text-primary"><%= stats.totals.products %></div>
           </div>
         </div>
-
-        <!-- Statistics Cards -->
-        <div class="row g-3 mb-4">
-          <div class="col-md-3">
-            <div class="card stat-card border-start border-primary border-4">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h6 class="text-muted mb-2">Total Products</h6>
-                    <h2 class="mb-0"><%= stats.totals.products %></h2>
-                  </div>
-                  <div class="stat-icon bg-primary">
-                    <i class="bi bi-box-seam"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <div class="card stat-card border-start border-success border-4">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h6 class="text-muted mb-2">Total Customers</h6>
-                    <h2 class="mb-0"><%= stats.totals.customers %></h2>
-                  </div>
-                  <div class="stat-icon bg-success">
-                    <i class="bi bi-people"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <div class="card stat-card border-start border-info border-4">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h6 class="text-muted mb-2">Total Licenses</h6>
-                    <h2 class="mb-0"><%= stats.totals.licenses %></h2>
-                  </div>
-                  <div class="stat-icon bg-info">
-                    <i class="bi bi-key"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <div class="card stat-card border-start border-warning border-4">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h6 class="text-muted mb-2">Active Licenses</h6>
-                    <h2 class="mb-0"><%= stats.totals.activeLicenses %></h2>
-                  </div>
-                  <div class="stat-icon bg-warning">
-                    <i class="bi bi-check-circle"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Charts Row -->
-        <div class="row g-3 mb-4">
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-header bg-white">
-                <h5 class="card-title mb-0"><i class="bi bi-bar-chart"></i> License Status Distribution</h5>
-              </div>
-              <div class="card-body">
-                <canvas id="licenseStatusChart" height="250"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-header bg-white">
-                <h5 class="card-title mb-0"><i class="bi bi-pie-chart"></i> License Type Breakdown</h5>
-              </div>
-              <div class="card-body">
-                <canvas id="licenseTypeChart" height="250"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Recent Activity and Expiring Licenses -->
-        <div class="row g-3 mb-4">
-          <!-- Expiring Licenses -->
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <h5 class="card-title mb-0"><i class="bi bi-exclamation-triangle text-warning"></i> Expiring Soon</h5>
-                <span class="badge bg-warning"><%= stats.expiring %></span>
-              </div>
-              <div class="card-body">
-                <% if (stats.expiringLicenses && stats.expiringLicenses.length > 0) { %>
-                  <div class="list-group list-group-flush">
-                    <% stats.expiringLicenses.forEach(license => { %>
-                      <a href="/licenses/<%= license.id %>" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h6 class="mb-1"><code><%= license.license_key %></code></h6>
-                          <small class="text-danger"><%= new Date(license.expiry_date).toLocaleDateString() %></small>
-                        </div>
-                        <p class="mb-1 small text-muted"><%= license.customer_name %> - <%= license.product_name %></p>
-                      </a>
-                    <% }) %>
-                  </div>
-                <% } else { %>
-                  <p class="text-muted text-center mb-0">No licenses expiring soon</p>
-                <% } %>
-              </div>
-            </div>
-          </div>
-
-          <!-- Recent Licenses -->
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-header bg-white">
-                <h5 class="card-title mb-0"><i class="bi bi-clock-history"></i> Recent Licenses</h5>
-              </div>
-              <div class="card-body">
-                <% if (stats.recentLicenses && stats.recentLicenses.length > 0) { %>
-                  <div class="list-group list-group-flush">
-                    <% stats.recentLicenses.forEach(license => { %>
-                      <a href="/licenses/<%= license.id %>" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h6 class="mb-1"><code><%= license.license_key %></code></h6>
-                          <span class="badge bg-<%= license.status === 'active' ? 'success' : license.status === 'expired' ? 'danger' : 'secondary' %>">
-                            <%= license.status %>
-                          </span>
-                        </div>
-                        <p class="mb-1 small text-muted"><%= license.customer_name %> - <%= license.product_name %></p>
-                      </a>
-                    <% }) %>
-                  </div>
-                <% } else { %>
-                  <p class="text-muted text-center mb-0">No licenses yet</p>
-                <% } %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
+      </div>
     </div>
   </div>
 
-  <%- include('../partials/footer') %>
+  <div class="col-md-6 col-xl-3">
+    <div class="card mb-3 widget-content card-border border-success">
+      <div class="widget-content-outer">
+        <div class="widget-content-wrapper">
+          <div class="widget-content-left">
+            <div class="widget-heading">Total Customers</div>
+            <div class="widget-subheading">Registered Users</div>
+          </div>
+          <div class="widget-content-right">
+            <div class="widget-numbers" style="color: var(--success);"><%= stats.totals.customers %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <script>
-    // License Status Chart
-    const statusCtx = document.getElementById('licenseStatusChart').getContext('2d');
-    new Chart(statusCtx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Active', 'Expired', 'Suspended'],
-        datasets: [{
-          data: [
-            <%= stats.totals.activeLicenses %>,
-            <%= stats.totals.expiredLicenses %>,
-            <%= stats.totals.suspendedLicenses %>
-          ],
-          backgroundColor: ['#16e0bd', '#dc3545', '#98838f'],
-          borderWidth: 0
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom'
-          }
+  <div class="col-md-6 col-xl-3">
+    <div class="card mb-3 widget-content card-border border-info">
+      <div class="widget-content-outer">
+        <div class="widget-content-wrapper">
+          <div class="widget-content-left">
+            <div class="widget-heading">Total Licenses</div>
+            <div class="widget-subheading">All Licenses</div>
+          </div>
+          <div class="widget-content-right">
+            <div class="widget-numbers" style="color: var(--info);"><%= stats.totals.licenses %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-xl-3">
+    <div class="card mb-3 widget-content card-border border-warning">
+      <div class="widget-content-outer">
+        <div class="widget-content-wrapper">
+          <div class="widget-content-left">
+            <div class="widget-heading">Active Licenses</div>
+            <div class="widget-subheading">Currently Active</div>
+          </div>
+          <div class="widget-content-right">
+            <div class="widget-numbers" style="color: var(--warning);"><%= stats.totals.activeLicenses %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row">
+  <div class="col-lg-6">
+    <div class="main-card mb-3 card">
+      <div class="card-header">
+        <i class="header-icon lnr-chart-bars icon-gradient bg-primary"> </i>
+        License Status Distribution
+      </div>
+      <div class="card-body">
+        <div class="chart-container">
+          <canvas id="licenseStatusChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="main-card mb-3 card">
+      <div class="card-header">
+        <i class="header-icon lnr-pie-chart icon-gradient bg-success"> </i>
+        License Type Breakdown
+      </div>
+      <div class="card-body">
+        <div class="chart-container">
+          <canvas id="licenseTypeChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Activity Row -->
+<div class="row">
+  <div class="col-lg-6">
+    <div class="main-card mb-3 card">
+      <div class="card-header">
+        <i class="header-icon lnr-warning icon-gradient bg-warning"> </i>
+        Expiring Soon
+        <span class="badge bg-warning ms-2"><%= stats.expiring %></span>
+      </div>
+      <div class="card-body">
+        <% if (stats.expiringLicenses && stats.expiringLicenses.length > 0) { %>
+          <div class="list-group">
+            <% stats.expiringLicenses.forEach(license => { %>
+              <a href="/licenses/<%= license.id %>" class="list-group-item list-group-item-action">
+                <div class="widget-content p-0">
+                  <div class="widget-content-wrapper">
+                    <div class="widget-content-left">
+                      <div class="widget-heading"><code><%= license.license_key %></code></div>
+                      <div class="widget-subheading mt-1">
+                        <i class="fa fa-user me-2"></i><%= license.customer_name %> - <%= license.product_name %>
+                      </div>
+                    </div>
+                    <div class="widget-content-right">
+                      <div class="badge bg-danger"><%= new Date(license.expiry_date).toLocaleDateString() %></div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="text-center text-muted py-4">
+            <i class="fa fa-check-circle fa-3x mb-3"></i>
+            <p class="mb-0">No licenses expiring soon</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="main-card mb-3 card">
+      <div class="card-header">
+        <i class="header-icon lnr-clock icon-gradient bg-info"> </i>
+        Recent Licenses
+      </div>
+      <div class="card-body">
+        <% if (stats.recentLicenses && stats.recentLicenses.length > 0) { %>
+          <div class="list-group">
+            <% stats.recentLicenses.forEach(license => { %>
+              <a href="/licenses/<%= license.id %>" class="list-group-item list-group-item-action">
+                <div class="widget-content p-0">
+                  <div class="widget-content-wrapper">
+                    <div class="widget-content-left">
+                      <div class="widget-heading"><code><%= license.license_key %></code></div>
+                      <div class="widget-subheading mt-1">
+                        <i class="fa fa-user me-2"></i><%= license.customer_name %> - <%= license.product_name %>
+                      </div>
+                    </div>
+                    <div class="widget-content-right">
+                      <div class="badge bg-<%= license.status === 'active' ? 'success' : license.status === 'expired' ? 'danger' : 'secondary' %>">
+                        <%= license.status %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="text-center text-muted py-4">
+            <i class="fa fa-inbox fa-3x mb-3"></i>
+            <p class="mb-0">No licenses yet</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// License Status Chart
+const statusCtx = document.getElementById('licenseStatusChart').getContext('2d');
+new Chart(statusCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Active', 'Expired', 'Suspended'],
+    datasets: [{
+      data: [
+        <%= stats.totals.activeLicenses %>,
+        <%= stats.totals.expiredLicenses %>,
+        <%= stats.totals.suspendedLicenses %>
+      ],
+      backgroundColor: ['#16e0bd', '#dc3545', '#98838f'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom'
+      }
+    }
+  }
+});
+
+// License Type Chart
+const typeCtx = document.getElementById('licenseTypeChart').getContext('2d');
+new Chart(typeCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Trial', 'Monthly', 'Yearly', 'Lifetime'],
+    datasets: [{
+      label: 'Licenses',
+      data: [12, 35, 18, 5],
+      backgroundColor: ['#98ce00', '#16e0bd', '#78c3fb', '#89a6fb'],
+      borderWidth: 0,
+      borderRadius: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          precision: 0
         }
       }
-    });
-
-    // License Type Chart (placeholder data)
-    const typeCtx = document.getElementById('licenseTypeChart').getContext('2d');
-    new Chart(typeCtx, {
-      type: 'bar',
-      data: {
-        labels: ['Trial', 'Monthly', 'Yearly', 'Lifetime'],
-        datasets: [{
-          label: 'Licenses',
-          data: [12, 35, 18, 5],
-          backgroundColor: ['#98ce00', '#16e0bd', '#78c3fb', '#89a6fb'],
-          borderWidth: 0,
-          borderRadius: 8
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              precision: 0
-            }
-          }
-        }
-      }
-    });
-  </script>
-</body>
-</html>
+    }
+  }
+});
+</script>

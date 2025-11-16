@@ -1,0 +1,107 @@
+<div class="app-header header-shadow">
+  <div class="app-header__logo">
+    <div class="logo-src"></div>
+    <div class="header__pane ml-auto">
+      <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="app-header__mobile-menu">
+    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+  </div>
+
+  <div class="app-header__menu">
+    <span>
+      <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+        <span class="btn-icon-wrapper">
+          <i class="fa fa-ellipsis-v fa-w-6"></i>
+        </span>
+      </button>
+    </span>
+  </div>
+
+  <div class="app-header__content">
+    <div class="app-header-left">
+      <div class="search-wrapper">
+        <div class="input-holder">
+          <input type="text" class="search-input" placeholder="Type to search">
+          <button class="search-icon"><span></span></button>
+        </div>
+        <button class="close"></button>
+      </div>
+    </div>
+
+    <div class="app-header-right">
+      <div class="header-btn-lg pr-0">
+        <div class="widget-content p-0">
+          <div class="widget-content-wrapper">
+            <div class="widget-content-left">
+              <div class="btn-group">
+                <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                  <img width="42" class="rounded-circle" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='42'%3E%3Crect fill='%2316e0bd' width='42' height='42'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='20' font-family='Arial'%3E<%= user.username.charAt(0).toUpperCase() %>%3C/text%3E%3C/svg%3E" alt="">
+                  <i class="fa fa-angle-down ms-2 opacity-8"></i>
+                </a>
+                <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-end">
+                  <div class="dropdown-menu-header">
+                    <div class="dropdown-menu-header-inner bg-info">
+                      <div class="menu-header-image opacity-2" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%25%22 height=%22100%25%22%3E%3Cdefs%3E%3ClinearGradient id=%22a%22 gradientUnits=%22userSpaceOnUse%22 x1=%220%22 y1=%220%22 x2=%22100%25%22 y2=%22100%25%22%3E%3Cstop offset=%220%22 stop-color=%22%2398ce00%22/%3E%3Cstop offset=%221%22 stop-color=%22%2316e0bd%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill=%22url%23a)%22 width=%22100%25%22 height=%22100%25%22/%3E%3C/svg%3E');"></div>
+                      <div class="menu-header-content text-start">
+                        <div class="widget-content p-0">
+                          <div class="widget-content-wrapper">
+                            <div class="widget-content-left me-3">
+                              <img width="42" class="rounded-circle" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='42'%3E%3Crect fill='white' width='42' height='42'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%2316e0bd' font-size='20' font-family='Arial'%3E<%= user.username.charAt(0).toUpperCase() %>%3C/text%3E%3C/svg%3E" alt="">
+                            </div>
+                            <div class="widget-content-left">
+                              <div class="widget-heading"><%= user.username %></div>
+                              <div class="widget-subheading opacity-8"><%= user.role %></div>
+                            </div>
+                            <div class="widget-content-right me-2">
+                              <form action="/auth/logout" method="POST">
+                                <button class="btn-pill btn-shadow btn-shine btn btn-focus">Logout</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="scroll-area-xs" style="height: 150px;">
+                    <div class="scrollbar-container">
+                      <ul class="nav flex-column">
+                        <li class="nav-item-header nav-item">Activity</li>
+                        <li class="nav-item">
+                          <a href="javascript:void(0);" class="nav-link">
+                            Settings
+                            <div class="ms-auto badge rounded-pill bg-info">New</div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="javascript:void(0);" class="nav-link">
+                            Messages
+                            <div class="ms-auto badge rounded-pill bg-warning">512</div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="widget-content-left ms-3 header-user-info">
+              <div class="widget-heading"><%= user.username %></div>
+              <div class="widget-subheading"><%= user.role %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
