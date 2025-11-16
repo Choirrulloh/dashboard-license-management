@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head') %>
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+
+  <div class="container-fluid">
+    <div class="row">
+      <%- include('../partials/sidebar') %>
+
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2"><i class="bi bi-plus-circle"></i> Create Product</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="/products" class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-arrow-left"></i> Back to Products
+            </a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-body">
+                <% if (error) { %>
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    <i class="bi bi-exclamation-triangle"></i> <%= error %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                <% } %>
+
+                <form action="/products/create" method="POST">
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Product Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="version" class="form-label">Version</label>
+                    <input type="text" class="form-control" id="version" name="version" value="1.0.0">
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="price" class="form-label">Price ($) <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                  </div>
+
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="/products" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                      <i class="bi bi-save"></i> Create Product
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head') %>
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+
+  <div class="container-fluid">
+    <div class="row">
+      <%- include('../partials/sidebar') %>
+
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2"><i class="bi bi-key-fill"></i> Generate License</h1>
+          <a href="/licenses" class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back</a>
+        </div>
+
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-body">
+                <% if (error) { %>
+                  <div class="alert alert-danger"><%= error %></div>
+                <% } %>
+
+                <form action="/licenses/create" method="POST">
+                  <div class="mb-3">
+                    <label class="form-label">Product <span class="text-danger">*</span></label>
+                    <select class="form-select" name="product_id" required>
+                      <option value="">Select a product...</option>
+                      <% products.forEach(product => { %>
+                        <option value="<%= product.id %>"><%= product.name %> (v<%= product.version %>)</option>
+                      <% }) %>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">Customer <span class="text-danger">*</span></label>
+                    <select class="form-select" name="customer_id" required>
+                      <option value="">Select a customer...</option>
+                      <% customers.forEach(customer => { %>
+                        <option value="<%= customer.id %>"><%= customer.name %> (<%= customer.email %>)</option>
+                      <% }) %>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">License Type <span class="text-danger">*</span></label>
+                    <select class="form-select" name="type" id="licenseType" required>
+                      <option value="">Select license type...</option>
+                      <% licenseTypes.forEach(type => { %>
+                        <option value="<%= type.name %>" data-days="<%= type.duration_days %>">
+                          <%= type.name %> (<%= type.duration_days %> days)
+                        </option>
+                      <% }) %>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">Max Activations</label>
+                    <input type="number" class="form-control" name="max_activations" value="1" min="1" max="100">
+                    <div class="form-text">Maximum number of devices that can use this license</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">Expiry Date (optional)</label>
+                    <input type="datetime-local" class="form-control" name="custom_expiry" id="expiryDate">
+                    <div class="form-text">Leave empty to use license type duration</div>
+                  </div>
+
+                  <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> License key will be automatically generated in format: <strong>XXXX-XXXX-XXXX-XXXX</strong>
+                  </div>
+
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="/licenses" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                      <i class="bi bi-key-fill"></i> Generate License
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <%- include('../partials/footer') %>
+
+  <script>
+    // Auto-calculate expiry date when license type changes
+    document.getElementById('licenseType').addEventListener('change', function() {
+      const selected = this.options[this.selectedIndex];
+      const days = parseInt(selected.getAttribute('data-days'));
+      if (days) {
+        const expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + days);
+        const formatted = expiryDate.toISOString().slice(0, 16);
+        document.getElementById('expiryDate').value = formatted;
+      }
+    });
+  </script>
+</body>
+</html>
