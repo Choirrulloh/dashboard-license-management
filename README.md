@@ -30,6 +30,33 @@ A comprehensive license management dashboard built with Express.js and SQLite. T
 
 ## Installation
 
+### Quick Start (Automated)
+
+The easiest way to get started is using the automated installer script:
+
+**On macOS/Linux**
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+**On Windows**
+```bash
+install.bat
+```
+
+The installer will:
+- ✓ Check Node.js installation
+- ✓ Detect and use pnpm or npm
+- ✓ Install all dependencies
+- ✓ Create `.env` configuration file
+- ✓ Initialize the SQLite database
+- ✓ Show you next steps
+
+### Manual Installation
+
+If you prefer to install manually:
+
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
@@ -64,15 +91,21 @@ A comprehensive license management dashboard built with Express.js and SQLite. T
 
 4. **Run database migration**
    ```bash
+   pnpm migrate
+   # or
    npm run migrate
    ```
 
 5. **Start the application**
    ```bash
    # Development (with auto-reload)
+   pnpm dev
+   # or
    npm run dev
 
    # Production
+   pnpm start
+   # or
    npm start
    ```
 
