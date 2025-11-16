@@ -9,6 +9,8 @@
     "init-db": "node scripts/init-db.js",
     "verify-db": "node scripts/verify-db.js",
     "test-api": "node scripts/test-api.js",
+    "rebuild-sqlite": "node scripts/rebuild-sqlite3.js",
+    "postinstall": "pnpm rebuild sqlite3 || echo 'SQLite3 rebuild failed. Run: pnpm rebuild-sqlite'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
