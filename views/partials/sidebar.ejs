@@ -8,7 +8,17 @@
   </div>
 
   <div class="offcanvas-body p-0">
-    <div class="position-sticky pt-md-3">
+    <!-- Logo/Brand di sidebar untuk Desktop -->
+    <div class="sidebar-brand d-none d-md-block p-3 mb-2">
+      <a href="/dashboard" class="text-decoration-none">
+        <h4 class="mb-0 text-center">
+          <i class="bi bi-shield-check"></i>
+          <span class="ms-2">License Manager</span>
+        </h4>
+      </a>
+    </div>
+
+    <div class="position-sticky pt-md-0">
       <ul class="nav flex-column">
         <li class="nav-item">
           <a class="nav-link <%= title === 'Dashboard' ? 'active' : '' %>" href="/dashboard">
