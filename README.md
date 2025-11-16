@@ -20,12 +20,12 @@ A comprehensive license management dashboard built with Express.js and SQLite. T
 - **Authentication**: JWT (jsonwebtoken 9.0.0) with bcryptjs
 - **Validation**: express-validator 7.0.0
 - **Logging**: Winston 3.8.2
-- **Package Manager**: npm
+- **Package Manager**: pnpm 8.0.0 (configured, npm also supported)
 
 ## Prerequisites
 
 - Node.js 18+ (LTS recommended)
-- npm 8+
+- pnpm 8+ (recommended) or npm 8+
 - 100MB disk space for database and logs
 
 ## Installation
@@ -37,6 +37,13 @@ A comprehensive license management dashboard built with Express.js and SQLite. T
    ```
 
 2. **Install dependencies**
+
+   **Using pnpm (recommended)**
+   ```bash
+   pnpm install
+   ```
+
+   **Using npm**
    ```bash
    npm install
    ```
@@ -491,6 +498,25 @@ Response: 200 OK
 
 ### Available Scripts
 
+**Using pnpm (recommended)**
+```bash
+# Start development server with auto-reload
+pnpm dev
+
+# Start production server
+pnpm start
+
+# Run database migration
+pnpm migrate
+
+# Run tests (if implemented)
+pnpm test
+
+# Run tests with coverage (if implemented)
+pnpm test --coverage
+```
+
+**Using npm**
 ```bash
 # Start development server with auto-reload
 npm run dev
