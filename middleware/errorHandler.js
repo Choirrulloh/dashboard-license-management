@@ -26,11 +26,9 @@ const errorHandler = (err, req, res, next) => {
     message = 'Database connection error';
   }
 
-  if (req.headers.accept?.includes('application/json')) {
-    return res.status(statusCode).json({ error: message });
-  }
-
-  res.status(statusCode).render('error', { message });
+  // Return JSON for API errors (Phase 1 is API-only)
+  // In Phase 2, you can add HTML view rendering support
+  res.status(statusCode).json({ error: message });
 };
 
 module.exports = errorHandler;
